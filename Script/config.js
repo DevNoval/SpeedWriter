@@ -57,4 +57,7 @@ const countSelect = document.getElementById('countSelect');
 const fontSize = document.getElementById('fontSize');
 const settingsBtn = document.getElementById("settingsBtn");
 const settingsModal = document.getElementById("settingsPanel");
+const closeBtn = document.getElementById('closeBtn');
+const warningModal = document.getElementById('warningModal');
+const footerLangToggle = document.getElementById('footerLang');
 const scoreboard = document.querySelectorAll('.score-item');

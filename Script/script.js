@@ -8,6 +8,12 @@ const pickRandom = (array, n) => {
   return out;
 };
 
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 /* ---------- Generate kata/quote ---------- */
 function generateWords() {
   if (!WORD_DATA) return [];
@@ -51,15 +57,35 @@ function renderWords(timerMode = STATE.mode === "timer") {
 
 /* ---------- Caret ---------- */
 function updateCaret() {
-  document.querySelectorAll(".caret").forEach(caret => caret.remove());
-  const current = document.querySelector(".word.current");
+  const container = document.querySelector(".words-container");
+  let caret = document.querySelector(".caret");
 
-  if (!current) return;
-  const caret = document.createElement("span");
-  caret.className = "caret"; caret.setAttribute("aria-hidden", "true");
-  const chars = [...current.children].filter(caret => !caret.classList.contains("caret"));
+  if (!caret) {
+    caret = Object.assign(document.createElement("span"), {
+      className: "caret",
+      ariaHidden: "true",
+    });
+    container.appendChild(caret);
+  }
+
+  const word = document.querySelector(".word.current");
+  if (!word) return;
+
   const pos = typingInput.value.length;
-  pos < chars.length ? current.insertBefore(caret, chars[pos]) : current.appendChild(caret);
+  const chars = [...word.children].filter(el => !el.classList.contains("caret"));
+  const target = chars[pos] || chars[chars.length - 1] || word;
+  const { left, top, width } = target.getBoundingClientRect();
+  const cRect = container.getBoundingClientRect();
+  const offset = 2;
+  
+  caret.style.left = `${left - cRect.left + (pos >= chars.length ? width - offset : -offset)}px`;
+  caret.style.top = `${top - cRect.top}px`;
+
+  clearTimeout(caret.blinkTimeout);
+  caret.style.animation = "none";
+  caret.blinkTimeout = setTimeout(() => {
+    caret.style.animation = "blink 1s infinite";
+  }, 100);
 }
 
 /* ---------- Input Handling ---------- */
@@ -160,18 +186,25 @@ function handleSpace() {
 /* ---------- Timer & Stats ---------- */
 function startTimer() {
   if (STATE.started) return;
-  STATE.started = true; STATE.startTime = Date.now();
-  
-  if (STATE.mode === "timer") STATE.timeLimit = STATE.activeTimerSeconds;
+  STATE.started = true;
+  STATE.startTime = Date.now();
+  if (STATE.mode === 'timer') STATE.timeLimit = STATE.activeTimerSeconds;
   STATE.timerInterval = setInterval(() => {
-    STATE.elapsed = (Date.now() - STATE.startTime) / 1000 | 0;
-  
+    STATE.elapsed = Math.floor((Date.now() - STATE.startTime) / 1000);
+
     if (STATE.mode === "timer") {
-      const left = Math.max(0, STATE.timeLimit - STATE.elapsed);
-      timeId.textContent = left;       
-  
-      if (!left) stopTimer();
-    } else timeId.textContent = STATE.elapsed;
+      const remaining = Math.max(0, STATE.timeLimit - STATE.elapsed);
+      timeId.textContent = formatTime(remaining);
+      updateFooter();
+
+      if (remaining <= 0) {
+        stopTimer();
+        typingInput.blur();
+      }
+    } else {
+      timeId.textContent = formatTime(STATE.elapsed);
+      updateFooter();
+    }
     updateWPM();
   }, 250);
 }
@@ -181,6 +214,12 @@ function stopTimer() {
   cleanUpTest();
   scoreboard?.forEach(el => el.classList.add("score-flash", "score-highlight"));
 
+  const caret = document.querySelector(".caret");
+  if (caret) {
+    caret.style.opacity = "0";
+    caret.style.animation = "none";
+  }
+
   if(typingInput && wordsContainer) {
     typingInput.classList.add("input-flash");
     wordsContainer.classList.add("display-flash");
@@ -188,6 +227,7 @@ function stopTimer() {
 
   typingInput.disabled = true; typingInput.blur();
   playWinningSound();
+  setTimeout(showScorePopup, 300);
 }
 
 function cleanUpTest() {
@@ -198,6 +238,20 @@ function cleanUpTest() {
   wordsContainer.classList.remove("display-flash");
 }
 
+/* ---------- Score Popup ---------- */
+function showScorePopup() {
+  const popup = document.getElementById("scorePopup");
+  if (!popup) return;
+  popup.classList.add("show");
+}
+
+function closeScorePopup() {
+  const popup = document.getElementById("scorePopup");
+  if (!popup) return;
+  popup.classList.remove("show");
+  setTimeout(() => popup.classList.add("hidden"), 400);
+}
+
 /* ---------- Restart & Helpers ---------- */
 function restartTest() {
   cleanUpTest(); Object.assign(STATE, {
@@ -205,7 +259,13 @@ function restartTest() {
     correctKeystrokes: 0, totalKeystrokes: 0, wordsList: generateWords()
   });
 
-  STATE.mode === "timer" ? renderWords(true) : renderWords();
+  if (STATE.mode === 'timer') {
+    renderWords(true);
+    timeId.textContent = formatTime(STATE.activeTimerSeconds); // 🔹 ubah ke formatTime
+  } else {
+    renderWords();
+    timeId.textContent = formatTime(0); // 🔹 mulai dari 0:00
+  }
   timeId.textContent = STATE.mode === "timer" ? STATE.activeTimerSeconds : 0;
   wpmId.textContent = 0; 
   accuracyId.textContent = 100;
@@ -226,12 +286,12 @@ function updateAccuracy() {
 };
 
 function updateFooter() {
-  const el = wordsLeftId.closest("small");
-  
-  if (STATE.mode === "timer") el.classList.add("hidden-element");
-  else {
-    wordsLeftId.textContent = Math.max(0, STATE.wordsList.length - STATE.currentIndex);
-    el.classList.remove("hidden-element");
+  if (STATE.mode === "timer") {
+    const remaining = Math.max(0, (STATE.timeLimit || STATE.activeTimerSeconds) - (STATE.elapsed || 0));
+    wordsLeftId.textContent = formatTime(remaining);
+  } else {
+    const wordsLeft = Math.max(0 + STATE.currentIndex);
+    wordsLeftId.textContent = `${wordsLeft}/${STATE.wordsList.length}`;
   }
 }
 
@@ -251,6 +311,8 @@ window.addEventListener("DOMContentLoaded", async () => {
   countSelect.value = STATE.setCount;
   STATE.activeWordCount = CONFIG.wordsCountOptions[STATE.setCount] ?? CONFIG.wordsCount;
   STATE.activeTimerSeconds = CONFIG.timerSecondsOptions[STATE.setCount] ?? CONFIG.timerSeconds;
+
+  if (closeBtn) closeBtn.onclick = closeScorePopup;
 
   await loadWordData();
   STATE.wordsList = generateWords();

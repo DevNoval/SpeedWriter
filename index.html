@@ -16,6 +16,10 @@
     
     <!--Control panel-->
     <div class="controls">
+      <div class="counter">
+        <h2><span id="wordsLeft">0</span></h2>
+      </div>
+
       <div id="settingsPanel" class="settings-panel hidden">
         
         <!--Language-->
@@ -26,8 +30,8 @@
         <!--Mode selection-->
         <div class="settings-group">
           <select id="modeSelect" class="btn" title="Ganti mode">
-            <option value="quote">💬Kutipan</option>
-            <option value="words">⌨️Kata Acak</option>
+            <option value="quote">💬Quotes</option>
+            <option value="words">⌨️Words</option>
             <option value="timer">🕛Timer</option>
           </select>
         </div>
@@ -65,24 +69,18 @@
       <button id="restartBtn" class="btn primary">Restart</button>
     </div>
 
+    <!--Main-->
     <main class="main">
       <!--Test area-->
       <section class="test-area">
         <div id="wordsContainer" class="words-container" aria-live="polite"></div>
         <input id="typingInput" class="typing-input" placeholder="Ketik teks disini..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
       </section>
-
-      <!--Scoreboard-->
-      <aside class="scoreboard">
-        <div class="score-item">WPM: <span id="wpm">0</span></div>
-        <div class="score-item">Waktu (s): <span id="time">0</span></div>
-        <div class="score-item">Akurasi (%): <span id="accuracy">100</span></div>
-      </aside>
     </main>
 
     <!--Footer-->
     <footer class="footer">
-      <small>Mode: <span id="modeLabel">Kata Acak</span> • Kata tersisa: <span id="wordsLeft">0</span></small>
+      <small>Mode: <span id="modeLabel">Kata Acak</span></small>
       <button id="helpBtn" class="btn help-btn" title="Bantuan">?</button>
     </footer>
 
@@ -91,8 +89,19 @@
       <div class="modal-content">
         <h2>Posisi Jari (Home Row Key)</h2>
         <p>Letakan jari-jari pada huruf A S D F (Kiri) dan J K L ; (Kanan).</p><br>
-        <img id="homeRowImg" class="keyboardImg" src="Data/touch-control.png" alt="Panduan posisi jari Home Row Key">
+        <img id="homeRowImg" class="keyboardImg" src="Data/touch-control(2).png" alt="Panduan posisi jari Home Row Key">
       </div>
+    </div>
+  </div>
+
+        <!--Scoreboard-->
+  <div id="scorePopup" class="scoreboard hidden">
+    <div class="score-item">
+      <h2>Score:</h2>
+      <p>WPM: <span id="wpm">0</span></p>
+      <p>Waktu: <span id="time">0</span></p>
+      <p>Akurasi: <span id="accuracy">100</span>%</p>
+      <button id="closeBtn" class="btn">Close</button>
     </div>
   </div>
 

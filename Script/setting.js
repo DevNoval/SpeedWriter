@@ -57,7 +57,7 @@ function updateCountSelectOptions() {
   if (isQuote) return;
   for (const [value, label] of Object.entries(map)) {
     const object = document.createElement('option');
-    object.value = value; object.textContent = `${label} ${isTimer ? 'detik' : 'kata'}`;
+    object.value = value; object.textContent = `${label} ${isTimer ? 'second' : 'words'}`;
     if (value === STATE.setCount) {
       object.selected = true;
       STATE.activeWordCount = CONFIG.wordsCountOptions[value] ?? CONFIG.wordsCount;
@@ -80,6 +80,12 @@ function toggleLanguage() {
   restartTest(); savePreferences();
 };
 
+function toggleModeSelect(e) {
+  STATE.mode = e.target.value;
+  modeLabel.textContent = MODE[STATE.mode] || STATE.mode;
+  updateCountSelectOptions(); updateFooter(); restartTest(); savePreferences();
+}
+
 function toggleSound() {
   STATE.audio = !STATE.audio;
   audioBtn.textContent = STATE.audio ? "🔊" : "🔇";
@@ -101,6 +107,11 @@ function toggleFontSize(size) {
   savePreferences();
 };
 
+function toggleSetting(e) {
+  e.stopPropagation();
+  settingsPanel.classList.toggle("show");
+}
+
 function toggleHelpModal() {
   if (helpModal.classList.contains('hidden')) {
     helpModal.style.display = 'block'
@@ -113,21 +124,10 @@ function toggleHelpModal() {
 };
 
 /* ---------- Events ---------- */
-modeSelect.addEventListener('change', e => {
-  STATE.mode = e.target.value;
-  modeLabel.textContent = MODE[STATE.mode] || STATE.mode;
-  updateCountSelectOptions(); updateFooter(); restartTest(); savePreferences();
-});
-
 fontSize.addEventListener('change', e => {
   STATE.font = e.target.value;
   toggleFontSize(e.target.value); 
   savePreferences();
-});
-
-settingsBtn.addEventListener('click', e => {
-  e.stopPropagation();
-  settingsPanel.classList.toggle("show");
 });
 
 themeBtn.addEventListener('click', toggleTheme);
@@ -135,3 +135,5 @@ langBtn.addEventListener('click', toggleLanguage);
 audioBtn.addEventListener('click', toggleSound);
 helpBtn.addEventListener('click', toggleHelpModal);
 countSelect.addEventListener('change',toggleCountSelect);
+settingsBtn.addEventListener('click', toggleSetting);
+modeSelect.addEventListener('change', toggleModeSelect);
