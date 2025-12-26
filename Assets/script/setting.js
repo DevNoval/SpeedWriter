@@ -148,6 +148,22 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPreferences();
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const restartBtnScore = document.getElementById('restartBtnScore');
+
+  if (restartBtnScore) {
+    restartBtnScore.onclick = () => {
+    closeScorePopup();
+
+    if (typeof init === 'function') {
+      init();
+    } else {
+      window.location.reload();
+    }
+  };
+  }
+});
+
 /* ---------- Events ---------- */
 fontSize.addEventListener('change', e => {
   STATE.font = e.target.value;
