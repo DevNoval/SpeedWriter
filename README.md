@@ -1,6 +1,6 @@
 # Speed Writer Touch Typing
 
-Visit the webpage: https://DevNoval.github.io/School-Project-TouchTyping
+Visit the webpage: https://DevNoval.github.io/SpeedWriter
 
 list of all update and version
 
@@ -77,3 +77,12 @@ list of all update and version
 - Added Settings and Tutorial to homepage
 - Bug fixes
 - Added more words to JSON file
+
+## 1.4 - 26.12.25
+- Fix some bug in scoreboard
+- Fix settings not showing in homepage
+- Remove help button
+- Improvise tutorial page
+- Small UI Changes
+- Added more words to JSON file
+- Organizing file structures
