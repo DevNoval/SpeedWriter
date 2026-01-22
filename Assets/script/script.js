@@ -254,7 +254,7 @@ function closeScorePopup() {
   setTimeout(() => popup.classList.add("hidden"), 400);
 }
 
-/* ---------- Restart & Helpers ---------- */
+/* ---------- Restart ---------- */
 function restartTest() {
   cleanUpTest(); Object.assign(STATE, {
     started: false, startTime: 0, elapsed: 0, currentIndex: 0,
@@ -275,6 +275,30 @@ function restartTest() {
   typingInput.disabled = false; 
   typingInput.focus();
   updateFooter(); updateCaret();
+}
+
+function init() {
+  Object.assign(STATE, {
+    started: false,
+    startTime: 0,
+    elapsed: 0,
+    currentIndex: 0,
+    correctKeystrokes: 0,
+    totalKeystrokes: 0,
+    wordsList: generateWords() // Mengambil kata/quote baru
+  });
+
+  if (STATE.mode === 'timer') {
+    renderWords(true);
+  } else {
+    renderWords();
+  }
+
+  wpmId.textContent = 0;
+  accuracyId.textContent = 100;
+  typingInput.value = "";
+  typingInput.disabled = false;  
+  typingInput.focus();
 }
 
 function updateWPM() {

@@ -59,5 +59,4 @@ const closeBtn = document.getElementById('closeBtn');
 const warningModal = document.getElementById('warningModal');
 const footerLangToggle = document.getElementById('footerLang');
 const scoreboard = document.querySelectorAll('.score-item');
-
 const closeSettingsBtn = document.getElementById('closeSettings');

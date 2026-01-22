@@ -148,19 +148,23 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPreferences();
 });
 
+// Di dalam setting.js
 document.addEventListener('DOMContentLoaded', () => {
   const restartBtnScore = document.getElementById('restartBtnScore');
 
   if (restartBtnScore) {
     restartBtnScore.onclick = () => {
-    closeScorePopup();
-
-    if (typeof init === 'function') {
-      init();
-    } else {
-      window.location.reload();
-    }
-  };
+      if (typeof closeScorePopup === 'function') {
+        closeScorePopup();
+      } else {
+        const scorePopup = document.getElementById('scorePopup');
+        scorePopup.classList.add('hidden');
+        scorePopup.classList.remove('show');
+        }
+        if (typeof init === 'function') {
+         init();
+        }
+    };
   }
 });
 
@@ -204,4 +208,3 @@ window.addEventListener("DOMContentLoaded", async () => {
   langBtn.textContent = STATE.language === "id" ? "🇮🇩 Bahasa" : "🇺🇸 English";
   updateCountSelectOptions(); updateFooter();
 });
-
