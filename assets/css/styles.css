@@ -1,0 +1,352 @@
+/* ======================== styles.css (ringkas & rapi) ======================== */
+
+/* ---------- Font ---------- */
+@font-face {
+  font-family: 'FiraCode';
+  src: url(../fonts/FiraCode-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ---------- Tema ---------- */
+:root {
+  --bg: #fff;
+  --text: #111827;
+  --card: #f3f4f6;
+  --accent: #ffd800;
+  --success: #16a34a;
+  --danger: #ef4444;
+  --hover: #e9e9e9;
+  --bgtrans: #e0e0e0ad;
+}
+
+body {
+  font-family: 'FiraCode', system-ui, Arial;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  font-size: 1.2rem;
+}
+
+body.theme-dark {
+  --bg: #0b1220;
+  --text: #e6eef8;
+  --card: #101927;
+  --accent: #ffd800;
+  --success: #34d399;
+  --danger: #fb7185;
+  --hover: #1b2330;
+  --bgtrans: #0b1220db;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ---------- Tata Letak Utama ---------- */
+.app {
+  max-width: 1080px;
+  margin: auto;
+  padding: 20px ;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.app-header { font-size: 1.5em; }
+
+.controls {
+  display: flex;
+  position: relative;
+  z-index: 10;
+  gap: 5px;
+}
+
+.counter {
+  font-size: 1.1em;
+  position: absolute;
+  top: -24px;
+}
+
+/* ---------- Panel Pengaturan ---------- */
+.settings-panel {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  position: relative;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s, opacity 0.4s;
+  transform: translateX(10%);
+  z-index: 0;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.settings-panel.show {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0); /* Geser sedikit ke bawah */
+  z-index: 0;
+}
+
+.settings-group {display: contents;}
+
+/* ---------- Area Tes ---------- */
+.main { display: flex; gap: 20px; flex-direction: column; }
+.test-area { flex: 1; }
+
+.words-container {
+  min-height: 140px;
+  border: 2px solid var(--card);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--card);
+  position: relative;
+}
+
+.word {
+  padding: 4px 6px;
+  margin-right: 6px;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: var(--word-font-size);
+}
+
+.word.current { background: var(--accent); color: #111; }
+.word.correct { color: var(--success); }
+.word.wrong { color: var(--danger); }
+.words-container.display-flash { animation: displayFlash 1s ease-out 1; }
+
+/* ---------- Caret & Input ---------- */
+.caret {
+  position:absolute;
+  height: var(--word-font-size);
+  margin-top: 2px;
+  width: 2px;
+  background: var(--text);
+  animation: blink 1s infinite;
+  transition: top 0.1s ease, left 0.1s ease;
+}
+
+.typing-input {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--input-font-size);
+  transition: box-shadow 0.12s, border-color 0.12s;
+}
+
+.typing-input.input-wrong {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.06);
+  background: rgba(239, 68, 68, 0.5);
+}
+
+.typing-input.input-flash { animation: inputFlash 1s ease-out 1; }
+
+/* ---------- Skor ---------- */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; 
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 9999;
+}
+
+.score-item {
+  background: var(--card);
+  font-size: 1.2em;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  width: 400px;
+  text-align: center;
+  transform: translateY(40px);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.modal:not(.hidden), .modal:not(.hidden) .score-item {
+  transform: translateY(0);
+  pointer-events: all;
+  opacity: 1;
+}
+
+.score-item.score-flash { animation: scoreFlash 1s ease-out 1; }
+.score-highlight { border: 2px solid var(--accent); }
+
+/* ---------- Footer ---------- */
+.footer { text-align: center; position: relative; margin-top: 12px;}
+.hidden-element { display: none !important; }
+
+
+/* ---------- Ukuran Font ---------- */
+.font-small { --word-font-size: 1.2em; --input-font-size: 0.9em; }
+.font-medium { --word-font-size: 1.6em; --input-font-size: 1.1em; }
+.font-large { --word-font-size: 2em; --input-font-size: 1.3em; }
+
+/* ---------- Tombol ---------- */
+.btn {
+  font-size: 0.9em;
+  background: var(--card);
+  color: var(--text);
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.25s;
+  z-index: 1;
+}
+
+.btn:hover { background: var(--hover); }
+.btn:active { transform: scale(0.98); }
+.primary, .primary:hover { background: var(--accent); color: #111; }
+
+/* ---------- Animasi ---------- */
+
+@keyframes inputFlash {
+  0%, 50% { background: rgba(255, 216, 0, 0.25); box-shadow: 0 0 0 3px var(--accent);}
+  100% { background: transparent; }
+}
+
+@keyframes displayFlash {
+  0%, 50% { border-color: var(--success); }
+  100% { border-color: var(--card); }
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ================= Consistent form controls & scrollbars ================= */
+input:focus {
+  outline:none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 216, 0, 0.25);
+}
+
+/* ================= Consistent Scrollbar & Dropdown (Chromium Only) ================= */
+@supports (-webkit-appearance: none) {
+
+  /* ----------- SCROLLBAR STYLING ----------- */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--card);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.3);
+    border-radius: 10px;
+    border: 2px solid var(--card);
+    background-clip: content-box;
+    transition: background 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 100, 100, 0.45);
+  }
+
+  body.theme-dark ::-webkit-scrollbar-thumb {
+    background: rgba(230, 230, 230, 0.25);
+    border-color: var(--card);
+  }
+  body.theme-dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(230, 230, 230, 0.4);
+  }
+
+  .settings-panel::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
+/* ---------- Reset umum ---------- */
+* { box-sizing: border-box; transition: background 0.25s, color 0.25s; }
+html {scroll-behavior: smooth;}
+
+/* ---------- Responsif ---------- */
+@media (max-width: 1080px) {
+  .main { flex-direction: column; }
+  .modal { width: 100%; }
+  .control { flex-wrap: wrap;}
+  .modal-content {padding-inline: 5%;}
+}
+
+@media (max-width: 720px) {
+  body { font-size:1rem; }
+  h1 { margin: 0; }
+  .app { display:block; }
+  
+  .app-header { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding-bottom: 5px;
+    margin-bottom: 4rem;
+  }
+
+  .counter {
+    width: 100%;
+    font-size: 0.9em;
+    top: 0;
+  }
+
+  .controls { 
+    width: 100%; 
+    justify-content: flex-end;
+    flex-wrap: wrap; 
+  }
+  
+  .settings-panel { 
+    top: 100%; 
+    right: 0; 
+    left: auto; 
+    min-width: 250px;
+    position: absolute; 
+    background: var(--card); 
+    margin-top: 16px;
+    justify-content: space-between;
+    transform: translateY(-10%);
+  }
+  
+  .settings-group {
+    width: 48%;
+    margin-bottom: 5px; 
+  }
+  
+  .settings-group .btn, .settings-group select { width: 100%;  }
+  .caret { width: 1px; }
+  .type-container { width: 300px; }
+
+  .text {
+    border-right: none;
+    width: 100%;
+    white-space: wrap;
+    text-align: center;
+    overflow: hidden;
+    animation: none;
+  }
+  
+  /* ---------- Ukuran Font ---------- */
+    .font-small { --word-font-size: 1em; --input-font-size: 0.8em; }
+    .font-medium { --word-font-size: 1.2em; --input-font-size: 1em; }
+    .font-large { --word-font-size: 1.6em; --input-font-size: 1.2em; }
+}
