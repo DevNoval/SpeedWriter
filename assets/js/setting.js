@@ -34,9 +34,9 @@ const STATE = {
 };
 
 let WORD_DATA = null;
-let typeSound = new Audio(`${BASE}/assets/audio/type.mp3`)
-let winningSound= new Audio(`${BASE}/assets/audio/win.mp3`)
-let errorSound = new Audio(`${BASE}/assets/audio/error.mp3`)
+let typeSound = new Audio(`../assets/audio/type.mp3`)
+let winningSound= new Audio(`../assets/audio/win.mp3`)
+let errorSound = new Audio(`../assets/audio/error.mp3`)
 
 const themeBtn = document.getElementById('themeBtn');
 const langBtn = document.getElementById('langBtn');
@@ -48,12 +48,6 @@ const countSelect = document.getElementById('countSelect');
 const fontSize = document.getElementById('fontSize');
 const settingsBtn = document.getElementById("settingsBtn");
 const closeBtn = document.getElementById('closeBtn');
-
-/* ---------- File Path Helper ---------- */
-export const BASE = (() => {
-  const p = location.pathname.split("/");
-  return p.length > 2 ? `/${p[1]}` : "";
-})();
 
 /* ---------- Simpan & Muat Preferensi ---------- */
 function savePreferences() {
@@ -187,7 +181,7 @@ modeSelect.addEventListener('change', toggleModeSelect);
 
 /* ---------- Load Data & Init ---------- */
 async function loadWordData() {
-  try { WORD_DATA = await (await fetch(`${BASE}/assets/data/data.json`)).json(); }
+  try { WORD_DATA = await (await fetch(`../assets/data/data.json`)).json(); }
   catch (error) { console.error("Gagal memuat data:", error); }
 }
 
