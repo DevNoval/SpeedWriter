@@ -1,58 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speed Writer</title>
-    <link rel="stylesheet" href="Assets/css/styles.css">
-    <link rel="stylesheet" href="Assets/css/home.css">
-    <link rel="stylesheet" href="Assets/css/mobile.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>⌨️ Speed Writer</title>
+  <link rel="stylesheet" href="assets/css/styles.css">  
 </head>
-<body class="theme-light bgimg">
-    <div class="trans-bg">
-        <header>
-            <h1><span style="color: #ffd800">Speed</span> Writer</h1>
-        </header>
+<body class="theme-light">
+  <div class="app">
+
+    <!--Header webpage-->
+    <header class="app-header">
+      <h1>Speed Writer</h1>
+    </header>
+
+    <!--Main-->
+    <main class="main">
+
+      <!--Control panel-->
+      <div class="controls">
+        <div class="counter">
+          <h2><span id="wordsLeft">0</span></h2>
+        </div>
         
-        <div class="home-menu">
-            <a href="Pages/main.html"><button class="btn" style="width: 15rem;">Start Test</button></a><br>
-            <button id="settingsBtn" class="btn" style="width: 15rem; margin-top: 4px;">Settings</button><br>
-            <a href="Pages/tutorial.html"><button class="btn" style="width: 15rem; margin-top: 4px;">Tutorial</button></a><br>
+        <div id="settingsPanel" class="settings-panel hidden">
+          
+          <!--Language-->
+          <div class="settings-group">
+            <button id="langBtn" class="btn" title="Ganti bahasa">🇮🇩 Bahasa</button>
+          </div>
+
+          <!--Mode selection-->
+          <div class="settings-group">
+            <select id="modeSelect" class="btn" title="Ganti mode">
+              <option value="quote">💬Quotes</option>
+              <option value="words">⌨️Words</option>
+              <option value="timer">🕛Timer</option>
+            </select>
+          </div>
+
+          <!--Count selection-->
+          <div class="settings-group">
+            <select id="countSelect" class="btn" title="Atur hitungan">
+              <option value="option1"></option>
+              <option value="option2"></option>
+              <option value="option3"></option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <select id="fontSize" class="btn" title="Ukuran font">
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+
+          <!--Audio-->
+          <div class="settings-group">
+            <button id="audioBtn" class="btn" title="Putar audio">🔇</button>
+          </div>
+
+          <!--Theme-->
+          <div class="settings-group">
+            <button id="themeBtn" class="btn" title="Ganti tema">☀️</button>
+          </div>
+
         </div>
 
-        <div class="type-container">
-            <p style="font-size: 0.7em; text-align: center;">Simple and minimal typing test. Practice and test your typing speed!</p>
-            <p class="text">Disclaimer: This website is not compatible for mobile devices, please use desktop or laptop, Thank you.</p>
-        </div>
+        <button id="settingsBtn" class="btn" title="Pengaturan">⚙️</button>
+        <button id="restartBtn" class="btn primary">Restart</button>
+      </div>
 
-        <div id="settingsModal" class="modal hidden">
-            <div class="modal-card">
-                <h2 style="margin-bottom: 20px;">Settings</h2>
-                <div class="settings-box">
-                    <span>Language:</span>
-                    <button id="langBtn" class="btn">🇺🇸 English</button>
-                </div>
-                <div class="settings-box">
-                    <span>Font Size:</span>
-                    <select id="fontSize" class="btn">
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                    </select>
-                </div>
-                <div class="settings-box">
-                    <span>Sound:</span>
-                    <button id="audioBtn" class="btn">🔇</button>
-                </div>
-                <div class="settings-box">
-                    <span>Theme:</span>
-                    <button id="themeBtn" class="btn">☀️</button>
-                </div>
-                <button id="closeSettings" class="btn primary" style="margin-top: 30px; width: 100%;">Close</button>
-            </div>
-        </div>
+      <!--Test area-->
+      <section class="test-area">
+        <div id="wordsContainer" class="words-container" aria-live="polite"></div>
+        <input id="typingInput" class="typing-input" placeholder="Ketik teks disini..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+      </section>
+    </main>
+
+    <!--Footer-->
+    <footer class="footer">
+      <small>Mode: <span id="modeLabel">Kata Acak</span></small>
+    </footer>
+  </div>
+
+        <!--Scoreboard-->
+  <div id="scorePopup" class="modal hidden">
+    <div class="score-item">
+      <h2>Score:</h2>
+      <p>WPM: <span id="wpm">0</span></p>
+      <p>Waktu: <span id="time">0</span></p>
+      <p>Akurasi: <span id="accuracy">100</span>%</p>
+      <button id="closeBtn" class="btn">Close</button>
+      <button id="restartBtnScore" class="btn primary">Restart</button>
     </div>
-    <script src="Assets/script/config.js"></script>
-    <script src="Assets/script/setting.js"></script>
+  </div>
+
+  <!--Javascript-->
+  <script src="assets/js/setting.js"></script>
+  <script src="assets/js/input.js"></script>
+  <script src="assets/js/reset.js"></script>
+
 </body>
 </html>

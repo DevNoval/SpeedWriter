@@ -1,94 +1,125 @@
-# Speed Writer Touch Typing
-Simple and minimal typing test. Practice and test your speed
+# Speed Writer Typing Test
+___
 
-Visit the webpage: https://DevNoval.github.io/SpeedWriter
+## 1. 📌 Deskripsi Proyek
+**Speed Writer** adalah aplikasi web interaktif untuk mengukur kecepatan dan akurasi mengetik pengguna. Website ini memiliki berbagai macam pengaturan yang bisa disesuaikan oleh usernya.
 
-![Speed writer Homepage](Assets/img/Screenshot_2025-12-26_125546.png)
+Proyek ini dirancang khusus untuk penggunaan desktop dan tidak kompatibel untuk mobile.
 
-![Play test](Assets/img/Screenshot_2025-12-26_202701.png)
+Kunjungi halaman webnya: https://DevNoval.github.io/SpeedWriter
+
+___
+
+## 2. 🎯 Tujuan Pembuatan
+- Melatih kecepatan dan ketepatan mengetik
+- Mengukur **WPM (Words Per Minute)** dan **Accuracy**
+- Menerapkan konsep:
+    1. DOM manipulation
+    2. State management
+    3. Modular JavaScript
+    4. Persistent settings (localStorage)
+- Membuat UI interaktif dengan animasi dan transisi halus
+
+___
+
+## 3. 🧩 Fitur Utama
+
+### ✨ Fitur Inti
+- Mode **Timer**, **Random Words**, dan **Quote**
+- Caret kustom yang bergerak mengikuti teks
+- Highlight kata benar & salah
+- Scoreboard muncul setelah tes selesai
+
+### ⚙️ Pengaturan (Settings)
+- Tema (Light / Dark)
+- Bahasa (Indonesia / English)
+- Ukuran Font (Small / Medium / Large)
+- Suara (ON / OFF)
+- Semua setting disimpan otomatis (tanpa tombol save)
+
+___
+
+## 4. 📁 Struktur Folder
+
+```
+project-root/ 
+│ 
+├── index.html                # Halaman tes mengetik
+├── README.md                 # Dokumentasi project
+├── changelog.md              # Data perubahan versi
+├── .gitignore                # Git ignore rules  
+│ 
+├── assets/ 
+│   ├── css/ 
+│   │   └── styles.css        # Semua styling & animasi 
+│   │ 
+│   ├── js/ 
+│   │   ├── input.js          # Menangani logic input
+│   │   ├── reset.js          # Sistem reset dan scoreboard
+│   │   └── setting.js        # Manajemen settings & UI 
+│   │ 
+│   ├── data/ 
+│   │   └── data.json        # Data kata 
+│   │
+│   ├── audio/               # Folder Audio
+│   │
+│   ├── fonts/               # Folder font 
+│   │
+│   └── img/                 # Folder img
+```
+---
+
+## 5. 🧠 Arsitektur & Konsep
+
+### 🧩 State Management
+Menggunakan objek global `STATE` untuk menyimpan:
+- currentIndex
+- elapsed time
+- mode (timer / words)
+- settings pengguna
+- daftar kata
+
+### 💾 Persistent Settings
+- Semua setting disimpan di `localStorage`
+
+___
+
+## 6. 📄 Penjelasan File JavaScript
+
+### `input.js`
+Menangani:
+- Render kata
+- Input user
+- Caret movement
+
+### `reset.js`
+Menangani:
+- Restart test
+- Hitung WPM & Accuracy
+- Timer
+- Scoreboard
+
+### `setting.js`
+Menangani:
+- Toggle panel settings
+- Sinkronisasi UI ↔ localStorage
+- Apply tema, font, bahasa
+- Responsif sidebar settings
 
 
-list of all update and version
+___
 
-# Pre-release
+## 7. ⚠️ Batasan
+- Tidak mendukung mobile device
+- Tidak ada backend (pure frontend)
+- Tidak menyimpan data pengguna secara online
 
-## 0.1 - 12.09.25
-- Remaked the website from start
-- Renamed the website from Script Kiddie to Speedy Typist
+---
 
-## 0.2 - 13.09.25
-- Added quotes and words mode
-- Added dark theme
-- Added input highlight when typing (correct: green; incorrect: red)
+## 8. 🚀 Cara Menjalankan
+1. Clone atau download project
+2. Buka `index.html` 
+3. Atur preferensi dengan menekan tombol ⚙️
+4. Mulai tes dan selamat mencoba!
 
-## 0.3 - 19.09.25
-- Added Caret
-- Added languages option (English & Indonesia)
-- Improvised input handling for typo
-
-## 0.4 - 27.09.25
-- Bug fixes
-  1. Fixing misplace caret
-  2. Fixing function for handling space
-  3. Fixing scoreboard for more accurate WPM speed and Accuracy percentage  
-
-## 0.5 - 28.09.25
-- Added saving preferences feature with Local Storage
-- Moved word data to JSON file
-
-## 0.6 - 01.10.25
-- Added highlight score and input when user finished typing
-- Play audio when typing
-- Play audio when typo
-- Play audio when user finished typing
-
-## 0.7 - 03.10.25
-- Added Timer mode
-
-## 0.8 - 11.10.25
-- Bug Fixes
-  1. Fixing Error in timer mode
-  2. Fixing input function in timer mode
-
-## 0.9 - 19.10.25
-- Added help button for typing tips
-- Added total count selection for words and timer mode
-
-# Full Release
-
-## 1.0 - 22.10.25
-- Renamed the website from Speedy Typist to Speed Writer
-- All settings were moved to settings panel beside restart button
-- Input are disabled when user finished typing
-- Added more words to JSON file
-
-## 1.1 - 29.10.25
-- Added font size selection for readability
-- Redesign the web layout
-- Adjusting the settings panel
-- Added Icon in tab
-- Rewrited the code to look more organized
-- Added more words to JSON file
-
-## 1.2 - 7.11.25
-- Added smooth caret
-- Increase font size for readability
-- Scoreboard are now hidden and only visible after finish typing
-- Improvise layout
-- Added more words to JSON file
-
-## 1.3 - 28.11.25
-- Added Homepage
-- Responsive layout for different screen
-- Added Settings and Tutorial to homepage
-- Bug fixes
-- Added more words to JSON file
-
-## 1.4 - 26.12.25
-- Fix some bug in scoreboard
-- Fix settings not showing in homepage
-- Remove help button
-- Improvise tutorial page
-- Small UI Changes
-- Added more words to JSON file
-- Organizing file structures
+_
